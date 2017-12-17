@@ -89,3 +89,7 @@ augroup END
 
 " Don't highlight paren
 let loaded_matchparen=1
+
+" autohighlight vue file
+autocmd FileType vue syntax sync fromstart
+
