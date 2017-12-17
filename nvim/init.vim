@@ -37,3 +37,6 @@ syntax enable
 " Configure emmet-vim
 " set trigger key
 let g:user_emmet_leader_key='<C-e>'
+
+" display line number
+set number
