@@ -10,6 +10,7 @@ if dein#load_state(s:dein_path)
   call dein#begin(s:dein_path)
 
   call dein#add('Shougo/dein.vim')
+  call dein#add('scrooloose/nerdtree')
 
   call dein#end()
   call dein#save_state()
