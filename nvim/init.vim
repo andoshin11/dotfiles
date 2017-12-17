@@ -17,6 +17,7 @@ if dein#load_state(s:dein_path)
 	call dein#add('Shougo/dein.vim')
 	call dein#add('scrooloose/nerdtree')
 	call dein#add('mattn/emmet-vim')
+	call dein#add('posva/vim-vue')
 
 	" Required:
 	call dein#end()
@@ -74,14 +75,8 @@ set tabstop=2
 " Number of spaces to use for each step if (auto)indent
 set shiftwidth=2
 
-" insert whitespaces instead of tab
-set expandtab
-
 " do smart autoindenting when starting a new line
 set smartindent
-
-" fire indentation on pressing tab key
-set indentkeys+=!<Tab>
 
 " recover cursor position on opening a file
 augroup recover_cursor_position
