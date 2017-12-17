@@ -38,6 +38,9 @@ syntax enable
 " set trigger key
 let g:user_emmet_leader_key='<C-e>'
 
+" Configure NERDTree
+map <C-t> :NERDTreeToggle<CR>
+
 " display line number
 set number
 
@@ -59,3 +62,4 @@ set smartindent
 
 " fire indentation on pressing tab key
 set indentkeys+=!<Tab>
+
