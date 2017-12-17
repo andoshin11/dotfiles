@@ -86,3 +86,6 @@ augroup recover_cursor_position
     \   exe "normal! g`\"" |
     \ endif
 augroup END
+
+" Don't highlight paren
+let loaded_matchparen=1
