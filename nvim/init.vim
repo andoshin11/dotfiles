@@ -16,6 +16,7 @@ if dein#load_state(s:dein_path)
   " Add or remove your plugins here:
   call dein#add('Shougo/dein.vim')
   call dein#add('scrooloose/nerdtree')
+  call dein#add('mattn/emmet-vim')
 
   " Required:
   call dein#end()
@@ -32,3 +33,7 @@ filetype plugin indent on
 " End dein Scripts-------------------------------------------
 
 syntax enable
+
+" Configure emmet-vim
+" set trigger key
+let g:user_emmet_leader_key='<C-e>'
