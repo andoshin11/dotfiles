@@ -53,3 +53,9 @@ set shiftwidth=2
 
 " insert whitespaces instead of tab
 set expandtab
+
+" do smart autoindenting when starting a new line
+set smartindent
+
+" fire indentation on pressing tab key
+set indentkeys+=!<Tab>
