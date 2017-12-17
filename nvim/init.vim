@@ -63,3 +63,11 @@ set smartindent
 " fire indentation on pressing tab key
 set indentkeys+=!<Tab>
 
+" recover cursor position on opening a file
+augroup recover_cursor_position
+  autocmd!
+  autocmd BufReadPost *
+    \ if &filetype != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line('$') |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
