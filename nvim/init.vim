@@ -93,3 +93,9 @@ let loaded_matchparen=1
 " autohighlight vue file
 autocmd FileType vue syntax sync fromstart
 
+" autofill paren
+inoremap { {}<Left>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap ( ()<ESC>i
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+inoremap <? <??><Left><Left><Space><Left>
