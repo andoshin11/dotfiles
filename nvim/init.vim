@@ -79,6 +79,9 @@ let g:NERDTreeIndicatorMapCustom = {
 " show hidden files on default
 let NERDTreeShowHidden=1
 
+" Close NERDTree if there's no buffer left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " display line number
 set number
 
