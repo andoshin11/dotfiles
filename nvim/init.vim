@@ -16,6 +16,7 @@ if dein#load_state(s:dein_path)
 	" Add or remove your plugins here:
 	call dein#add('Shougo/dein.vim')
 	call dein#add('scrooloose/nerdtree')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
 	call dein#add('mattn/emmet-vim')
 	call dein#add('posva/vim-vue')
 
@@ -62,6 +63,22 @@ call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
 call NERDTreeHighlightFile('vue',    'Green',   'none', '#4fc08d', '#4fc08d')
 
+" configure nerdtree-git-plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+" show hidden files on default
+let NERDTreeShowHidden=1
+
 " display line number
 set number
 
@@ -74,6 +91,7 @@ set tabstop=2
 
 " Number of spaces to use for each step if (auto)indent
 set shiftwidth=2
+set expandtab
 
 " do smart autoindenting when starting a new line
 set smartindent
@@ -96,6 +114,6 @@ autocmd FileType vue syntax sync fromstart
 " autofill paren
 inoremap { {}<Left>
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap ( ()<ESC>i
+inoremap ( ()<Left>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap <? <??><Left><Left><Space><Left>
