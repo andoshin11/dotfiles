@@ -120,3 +120,6 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap ( ()<Left>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap <? <??><Left><Left><Space><Left>
+
+" simple switch from terminal mode to command mode
+tnoremap <silent> <ESC> <C-\><C-n>
