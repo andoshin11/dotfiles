@@ -2,7 +2,8 @@
 bindkey -e
 
 # enable colors
-autoload -Uz colors; colors
+autoload -Uz colors
+colors
 
 # change directory without cd
 setopt auto_cd
@@ -18,18 +19,19 @@ function chpwd() {
 
 # prompt
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' formats '(%s)-[%b]'
-zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "${fg[yellow]}"
+zstyle ':vcs_info:git:*' unstagedstr "${fg[red]}+"
+zstyle ':vcs_info:*' formats "${fg[cyan]}%c%u(%b)${reset_color}"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
-function precmd() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-}
+precmd () { vcs_info }
 
-PROMPT="%(?.%F{green}%}.%F{magenta})%n@%m%f $ "
+PROMPT='%{$fg[green]%}[%n@%m]%{$reset_color%}'
+PROMPT=$PROMPT'${vcs_info_msg_0_} %{${fg[red]}%}%}$%{${reset_color}%} '
 
-RPROMPT="%F{cyan}[%~]%f %1(v|%F{green}%1v%f|)"
+RPROMPT="%F{cyan}[%~]%f"
 
 # zplug
 source ~/.zplug/init.zsh
