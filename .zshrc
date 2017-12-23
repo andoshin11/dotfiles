@@ -1,3 +1,21 @@
+# enable Emacs key bind
+bindkey -e
+
+# enable colors
+autoload -Uz colors; colors
+
+# change directory without cd
+setopt auto_cd
+
+# list files when changes directory
+function chpwd() {
+  if [ `ls -Al | wc -l` -eq 0 ]; then
+    echo "\n\nempty directory";
+  else
+    ls
+  fi
+}
+
 # prompt
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%s)-[%b]'
@@ -15,3 +33,7 @@ RPROMPT="%F{cyan}[%~]%f %1(v|%F{green}%1v%f|)"
 
 # zplug
 source ~/.zplug/init.zsh
+
+zplug "zsh-users/zsh-syntax-highlighting"
+
+zplug load
