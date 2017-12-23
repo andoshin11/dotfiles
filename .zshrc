@@ -2,8 +2,7 @@
 bindkey -e
 
 # enable colors
-autoload -Uz colors
-colors
+autoload -Uz colors; colors
 
 # change directory without cd
 setopt auto_cd
@@ -23,7 +22,7 @@ setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr "${fg[yellow]}"
 zstyle ':vcs_info:git:*' unstagedstr "${fg[red]}+"
-zstyle ':vcs_info:*' formats "${fg[cyan]}%c%u(%b)${reset_color}"
+zstyle ':vcs_info:*' formats "${fg[blue]}%c%u(%b)${reset_color}"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
 precmd () { vcs_info }
@@ -39,3 +38,6 @@ source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 
 zplug load
+
+# load config
+source ~/.zsh_alias
