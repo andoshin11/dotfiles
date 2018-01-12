@@ -124,3 +124,6 @@ inoremap [ []<Left>
 
 " simple switch from terminal mode to command mode
 tnoremap <silent> <ESC> <C-\><C-n>
+
+" Allow changing buffer without saving files
+set hidden
