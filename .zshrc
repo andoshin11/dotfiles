@@ -30,7 +30,7 @@ precmd () { vcs_info }
 PROMPT='%{$fg[green]%}[%n@%m]%{$reset_color%}'
 PROMPT=$PROMPT'${vcs_info_msg_0_} %{${fg[red]}%}%}$%{${reset_color}%} '
 
-RPROMPT="%F{cyan}[%~]%f"
+RPROMPT="%F{blue}[%~]%f"
 
 # zplug
 source ~/.zplug/init.zsh
