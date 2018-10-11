@@ -1,3 +1,6 @@
+# environmental variables
+export PATH=$PATH:$HOME/.nodebrew/current/bin
+
 # enable Emacs key bind
 bindkey -e
 
@@ -41,3 +44,6 @@ zplug load
 
 # load config
 source ~/.zsh_alias
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
