@@ -89,5 +89,8 @@ au FileType unite imap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
 au FileType unite nmap <silent> <buffer> <ESC><ESC> q
 au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 
+" Markdown settings
+set syntax=markdown
+au BufRead,BufNewFile *.md set filetype=markdown
 
 
