@@ -1,0 +1,6 @@
+Host github
+  HostName github.com
+  Identityfile ~/.ssh/id_rsa
+  Port 22
+  User git
+
