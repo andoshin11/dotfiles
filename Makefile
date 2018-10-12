@@ -3,6 +3,7 @@ EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 INSTALLERS := $(wildcard ./scripts/*sh)
 
+.PHONY: list
 list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), /bin/ls -dF $(val);)
 
