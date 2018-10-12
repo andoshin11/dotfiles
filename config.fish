@@ -11,3 +11,5 @@ end
 
 # env
 set -x PATH $HOME/.nodebrew/current/bin $PATH
+set -x GOPATH $HOME/dev/go
+set -x PATH $GOPATH/bin $PATH
