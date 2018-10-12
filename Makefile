@@ -1,7 +1,7 @@
 CANDIDATES := $(wildcard .??*)
 EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
-INSTALLERS := $(wildcard ./etc/setup/*sh)
+INSTALLERS := $(wildcard ./scripts/*sh)
 
 list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), /bin/ls -dF $(val);)
