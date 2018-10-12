@@ -10,7 +10,7 @@ deploy: ## Create symlink to home directory
 	@echo 'Copyright (c) 2018 Shin Ando All Rights Reserved.'
 	@echo '==> Start to deploy dotfiles to home directory.'
 	@echo ''
-	@$(foreach val, $(FILES), ln -sfvn $(abspath $(val)) $(HOME)/$(val);)
+	@$(foreach val, $(DOTFILES), ln -sfvn $(abspath $(val)) $(HOME)/$(val);)
 
 update: ## Fetch changes for this repo
 	git pull origin master
