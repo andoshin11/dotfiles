@@ -60,6 +60,7 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('sjl/badwolf')
   call dein#add('scrooloose/nerdtree')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('itchyny/lightline.vim')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -123,4 +124,6 @@ set syntax=markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
 colorscheme badwolf
+set laststatus=2
+set t_Co=256
 
