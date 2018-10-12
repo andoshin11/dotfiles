@@ -27,6 +27,7 @@ Triggered by `make init` command, all the scripts under `./script` will be execu
 - Setup Node environment :earth_asia:
 - Setup Go environment :muscle:
 - Setup VSCode :pencil:
+- Setup Google Cloud SDK :cloud:
 
 
 ## Deployement
