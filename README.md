@@ -1,6 +1,6 @@
 # Quick Start
 
-Run command below to make magic happen!
+Run the command below to make magic happen! :heart_eyes::sparkles:
 
 ```shell
 $ curl -L raw.github.com/andoshin11/dotfiles/master/install.sh | bash
@@ -36,4 +36,9 @@ Triggered by `make deploy` command, symbolic links are made for all the dotfiles
 - .tmux.conf
 - .vimrc
 - .zshrc
+
+# Contact
+Shin Ando (andoshin11)
+
+<shinglish11@gmail.com>
 
