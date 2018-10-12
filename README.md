@@ -1,13 +1,13 @@
 # Quick Start
 
-Execute command below to make magic happen!
+Run command below to make magic happen!
 
 ```shell
 $ curl -L raw.github.com/andoshin11/dotfiles/master/install.sh | bash
 ```
 
 # Keep in mind :warning:
-These scripts are not tested to work on every platforms therefore *very* have high possibility to cause serious damage to your machine.
+These scripts are not tested to work on every platforms, therefore contain **very** high possibility to cause serious damage to your machine. :computer:
 
 I strongly recommend to fork and personalize scripts before you actually run them on your machines.
 
@@ -21,12 +21,12 @@ Triggered by `make init` command, all the scripts under `./script` will be execu
 
 - Installing Homebrew :beer:
 - Setup fish shell :fish:
-- Install powerline font and fish theme
+- Install powerline font and fish theme :art:
 - Download apps :apple:
-- Setup dein.vim
-- Setup Node environment
-- Setup Go environment
-- Setup VSCode
+- Setup dein.vim :pencil2:
+- Setup Node environment :earth_asia:
+- Setup Go environment :muscle:
+- Setup VSCode :pencil:
 
 
 ## Deployement
