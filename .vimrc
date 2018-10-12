@@ -10,6 +10,9 @@ inoremap { {}<LEFT>
 inoremap ( ()<LEFT>
 set cursorline
 
+" enable scroll
+set mouse=a
+
 " save backup file in ~/.vim/backup
 set backup
 set backupdir=$HOME/.vim/backup
