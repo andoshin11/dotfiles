@@ -1,3 +1,11 @@
+[alias]
+  br = branch
+  co = checkout
+  cm = commit -m
+  cma = commit --amend
+  lg = log --oneline --graph --decorate
+  st = status
+
 [user]
 	name = andoshin11
 	email = shinglish11@gmail.com
