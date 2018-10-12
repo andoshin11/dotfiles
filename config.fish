@@ -8,3 +8,6 @@ function cd
   builtin cd $argv
   ls -a
 end
+
+# env
+set -x PATH $HOME/.nodebrew/current/bin $PATH
