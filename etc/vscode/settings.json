@@ -2,7 +2,6 @@
     "window.zoomLevel": 1,
     "workbench.colorTheme": "Visual Studio Dark",
     "npm.packageManager": "yarn",
-    "eslint.packageManager": "yarn",
     "editor.detectIndentation": false,
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
@@ -24,5 +23,6 @@
         },
     "javascript.implicitProjectConfig.experimentalDecorators": true,
     "html.format.wrapLineLength": 60,
-    "editor.wordWrap": "on"
-  }}}}}}
+    "editor.wordWrap": "on",
+    "editor.fontSize": 14
+  }
