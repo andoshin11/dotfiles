@@ -1,7 +1,7 @@
 1password
 alfred
 caffeine
-chromium
+google-chrome
 clipy
 diskwave
 docker-toolbox
@@ -13,4 +13,5 @@ iterm2
 plex-media-server
 skype
 spotify
+visual-studio-code
 vlc
