@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTPATH=~/dev/dotfiles2
+DOTPATH=~/dev/dotfiles
 GITHUB_URL=https://github.com/andoshin11/dotfiles
 TARBALL="${GITHUB_URL}/archive/master.tar.gz"
 
@@ -49,4 +49,5 @@ if [ $? -ne 0]; then
     die "not found: $DOTPATH"
 fi
 
-make list
+make install
+

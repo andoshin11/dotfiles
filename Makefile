@@ -17,3 +17,7 @@ update: ## Fetch changes for this repo
 
 init:
 	@$(foreach val, $(INSTALLERS), sh $(val);)
+
+install: init deploy
+	@exec $$SHELL
+
