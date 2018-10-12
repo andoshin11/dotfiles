@@ -57,6 +57,7 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
   call dein#add('Shougo/neomru.vim')
+  call dein#add('sjl/badwolf')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -96,4 +97,5 @@ au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 set syntax=markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
+colorscheme badwolf
 
