@@ -19,6 +19,7 @@ I strongly recommend to fork and personalize scripts before you actually run the
 ## Initialization
 Triggered by `make init` command, all the scripts under `./script` will be executed for the purpose of initialization.
 
+- Generate SSH key :key:
 - Installing Homebrew :beer:
 - Setup fish shell :fish:
 - Install powerline font and fish theme :art:
