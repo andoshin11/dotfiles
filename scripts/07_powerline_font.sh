@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Install powerline
-git clone https://github.com/powerline/fonts ~$PWD/tmp
-sh $PWD/tmp/install.sh
-rm $PWD/tmp/install.sh
+mkdir -p $HOME/dev/powerline
+git clone https://github.com/powerline/fonts $HOME/dev/powerline
+sh $HOME/dev/powerline/install.sh
 
 # Setup theme
 fish -c 'fisher add oh-my-fish/theme-bobthefish'
