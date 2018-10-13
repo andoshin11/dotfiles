@@ -64,6 +64,7 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('Shougo/vimproc')
   call dein#add('Quramy/tsuquyomi')
   call dein#add('leafgarland/typescript-vim')
+  call dein#add('posva/vim-vue')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
