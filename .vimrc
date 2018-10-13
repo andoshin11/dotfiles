@@ -61,6 +61,8 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('scrooloose/nerdtree')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
   call dein#add('itchyny/lightline.vim')
+  call dein#add('Shougo/vimproc')
+  call dein#add('Quramy/tsuquyomi')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
