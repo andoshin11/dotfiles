@@ -16,6 +16,9 @@ deploy: ## Create symlink to home directory
 update: ## Fetch changes for this repo
 	git pull origin master
 
+push: ## Push changes to master
+	git push origin master
+
 init:
 	@$(foreach val, $(INSTALLERS), sh $(val);)
 
