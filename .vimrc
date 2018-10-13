@@ -1,9 +1,18 @@
+" Number of spaces a tab in the file counts for
 set tabstop=2
+
+" Number of spaces to use for each step if (auto)indent
 set shiftwidth=2
-syntax on
-set number
 set expandtab
+syntax on
+
+" Display line number
+set number
+
+" Do smart autoindenting when starting a new line
 set smartindent
+
+" Display ^ for tabs, ~ for trailing spaces
 set list
 set listchars=tab:^\ ,trail:~
 inoremap { {}<LEFT>
@@ -26,7 +35,7 @@ set nowrap
 " set the number of history lines that are remembered
 set history=2000
 
-" recover cursor position on opening a file
+" Recover cursor position on opening a file
 augroup recover_cursor_position
   autocmd!
   autocmd BufReadPost *
@@ -123,6 +132,8 @@ call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
 call NERDTreeHighlightFile('vue',    'Green',   'none', '#4fc08d', '#4fc08d')
+
+
 
 "Emmet----------------------------------
 let g:user_emmet_leader_key='<C-e>'
