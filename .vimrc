@@ -65,6 +65,7 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('Quramy/tsuquyomi')
   call dein#add('leafgarland/typescript-vim')
   call dein#add('posva/vim-vue')
+  call dein#add('mattn/emmet-vim')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -123,7 +124,10 @@ call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
 call NERDTreeHighlightFile('vue',    'Green',   'none', '#4fc08d', '#4fc08d')
 
-" Markdown settings
+"Emmet----------------------------------
+let g:user_emmet_leader_key='<C-e>'
+
+"Markdown-------------------------------
 set syntax=markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
