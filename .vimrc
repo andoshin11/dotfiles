@@ -75,6 +75,7 @@ if dein#load_state('/Users/shin/.vim/dein')
   call dein#add('leafgarland/typescript-vim')
   call dein#add('posva/vim-vue')
   call dein#add('mattn/emmet-vim')
+  call dein#add('mattn/jscomplete-vim')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
@@ -112,7 +113,7 @@ au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 
 "NerdTree---------------------------------
 " set trigger key
-map <C-t> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -141,6 +142,12 @@ let g:user_emmet_leader_key='<C-e>'
 "Markdown-------------------------------
 set syntax=markdown
 au BufRead,BufNewFile *.md set filetype=markdown
+
+"FileType------------------------------
+
+" JavScript
+autocmd FileType javascript
+      \ :set omnifunc=jscomplete#CompleteJS
 
 colorscheme badwolf
 set laststatus=2
