@@ -1,31 +1,37 @@
 {
-    "window.zoomLevel": 1,
-    "workbench.colorTheme": "Visual Studio Dark",
-    "npm.packageManager": "yarn",
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2,
+  "window.zoomLevel": 1,
+  "workbench.colorTheme": "Visual Studio Dark",
+  "npm.packageManager": "yarn",
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "[go]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "[groovy]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "[rust]": {
     "editor.insertSpaces": true,
-    "[go]": {
-          "editor.insertSpaces": false,
-          "editor.tabSize": 4
-        },
-    "[groovy]": {
-          "editor.insertSpaces": false,
-          "editor.tabSize": 4
-        },
-    "[rust]": {
-          "editor.insertSpaces": true,
-          "editor.tabSize": 4
-    },
-    "[makefile]": {
-          "editor.insertSpaces": false,
-          "editor.tabSize": 4
-        },
-    "javascript.implicitProjectConfig.experimentalDecorators": true,
-    "html.format.wrapLineLength": 60,
-    "editor.wordWrap": "on",
-    "editor.fontSize": 14,
-    "prettier.semi": false,
-    "prettier.singleQuote": true,
-    "editor.formatOnSave": true
-  }
+    "editor.tabSize": 4
+  },
+  "[makefile]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "html.format.wrapLineLength": 60,
+  "editor.wordWrap": "on",
+  "editor.fontSize": 14,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "editor.formatOnSave": true,
+  "dart.flutterSdkPath": "/Users/shin/dev/flutter",
+  "prettier.disableLanguages": [
+    "vue",
+    "ts"
+  ],
+  "git.ignoreMissingGitWarning": true
+}
