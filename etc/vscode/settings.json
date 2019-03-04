@@ -29,9 +29,9 @@
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
   "dart.flutterSdkPath": "/Users/shin/dev/flutter",
-  "prettier.disableLanguages": [
-    "vue",
-    "ts"
-  ],
-  "git.ignoreMissingGitWarning": true
+  "prettier.disableLanguages": ["vue", "ts"],
+  "git.ignoreMissingGitWarning": true,
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.visualstar": true
 }
