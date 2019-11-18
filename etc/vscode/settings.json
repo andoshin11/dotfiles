@@ -1,5 +1,5 @@
 {
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "workbench.colorTheme": "Visual Studio Dark",
   "npm.packageManager": "yarn",
   "editor.detectIndentation": false,
