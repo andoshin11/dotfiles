@@ -10,8 +10,8 @@ firefox
 franz
 gyazo
 iterm2
-plex-media-server
 skype
 spotify
+tableplus
 visual-studio-code
 vlc
