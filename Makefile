@@ -1,5 +1,5 @@
 CANDIDATES := $(wildcard .??*)
-EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
+EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml .zsh_alias .zshrc .vimrc
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 INSTALLERS := $(wildcard ./scripts/*sh)
 
@@ -8,7 +8,7 @@ list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), /bin/ls -dF $(val);)
 
 deploy: ## Create symlink to home directory
-	@echo 'Copyright (c) 2018 Shin Ando All Rights Reserved.'
+	@echo 'Copyright (c) 2021 Shin Ando All Rights Reserved.'
 	@echo '==> Start to deploy dotfiles to home directory.'
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfvn $(abspath $(val)) $(HOME)/$(val);)
