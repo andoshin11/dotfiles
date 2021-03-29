@@ -7,6 +7,10 @@ alias wttr 'curl wttr.in/tokyo'
 alias gt "git log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'"
 alias gbm 'git branch --merged'
 alias dm 'diesel migration'
+alias dr 'docker rm (docker ps -aq)'
+alias dri 'docker rmi (docker images -f "dangling=true" -q)'
+alias goland '/usr/local/bin/goland'
+alias kbb 'kubectl run busybox --restart=Never -it --image=busybox --rm /bin/sh'
 
 # exec ls after cd
 function cd
@@ -15,14 +19,8 @@ function cd
 end
 
 # env
+set -x KUBECONFIG $HOME/.kube/config
 set -x PATH $HOME/.nodebrew/current/bin $PATH
-set -x GOENV_DISABLE_GOPATH 1
-set -x GOPATH $HOME/dev/go
-set -x PATH $GOPATH/bin $PATH
-set -x PATH $HOME/.goenv/bin $PATH
-set -x PATH $HOME/.cargo/bin $PATH
-set -x PATH /usr/local/Cellar/postgresql/11.4/bin $PATH
-set -x PATH $HOME/.pyenv/bin $PATH
 
-status --is-interactive; and source (goenv init -|psub)
-
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/google-cloud-sdk/path.fish.inc ]; . $HOME/google-cloud-sdk/path.fish.inc; end
