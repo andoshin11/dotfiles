@@ -6,4 +6,3 @@ nodebrew install-binary stable
 nodebrew use $(nodebrew list | head -n1)
 
 $HOME/.nodebrew/current/bin/npm install -g yarn
-
