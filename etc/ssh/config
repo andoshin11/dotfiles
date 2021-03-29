@@ -3,4 +3,3 @@ Host github
   Identityfile ~/.ssh/id_rsa
   Port 22
   User git
-
