@@ -3,6 +3,7 @@
 Run the command below to make magic happen! :heart_eyes::sparkles:
 
 ```shell
+$ xcode-select --install
 $ curl -L raw.github.com/andoshin11/dotfiles/master/install.sh | bash
 ```
 
