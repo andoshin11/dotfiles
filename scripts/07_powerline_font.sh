@@ -6,4 +6,4 @@ git clone https://github.com/powerline/fonts $HOME/dev/powerline
 sh $HOME/dev/powerline/install.sh
 
 # Setup theme
-fish -c 'fisher add oh-my-fish/theme-bobthefish'
+fish -c 'fisher install oh-my-fish/theme-bobthefish'
