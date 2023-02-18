@@ -1,8 +1,8 @@
 #!/bin/bash
 
 brew install fish
-sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
-sudo chsh -s /usr/local/bin/fish
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+sudo chsh -s /opt/homebrew/bin/fish
 
 # Install fisherman
 curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher

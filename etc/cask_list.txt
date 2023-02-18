@@ -7,11 +7,9 @@ diskwave
 docker-toolbox
 dropbox
 firefox
-franz
 gyazo
 iterm2
 skype
 spotify
 tableplus
 visual-studio-code
-vlc

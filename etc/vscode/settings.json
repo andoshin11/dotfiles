@@ -1,37 +1,68 @@
 {
-  "window.zoomLevel": 0,
-  "workbench.colorTheme": "Visual Studio Dark",
-  "npm.packageManager": "yarn",
-  "editor.detectIndentation": false,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "[go]": {
-    "editor.insertSpaces": false,
-    "editor.tabSize": 4
+  "npm.packageManager" : "yarn",
+  "explorer.compactFolders" : false,
+  "terminal.integrated.env.osx" : {
+    "FIG_NEW_SESSION": "1"
   },
-  "[groovy]": {
-    "editor.insertSpaces": false,
-    "editor.tabSize": 4
+  "vim.visualstar" : true,
+  "html.format.wrapLineLength" : 60,
+  "workbench.colorTheme" : "Better Solarized Light",
+  "[makefile]" : {
+    "editor.insertSpaces" : false,
+    "editor.tabSize" : 4
   },
-  "[rust]": {
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4
+  "[groovy]" : {
+    "editor.insertSpaces" : false,
+    "editor.tabSize" : 4
   },
-  "[makefile]": {
-    "editor.insertSpaces": false,
-    "editor.tabSize": 4
+  "volar.codeLens.references" : false,
+  "javascript.implicitProjectConfig.experimentalDecorators" : true,
+  "editor.wordWrap" : "on",
+  "liveshare.presence" : false,
+  "editor.maxTokenizationLineLength" : 200000,
+  "vim.hlsearch" : true,
+  "editor.tabSize" : 2,
+  "[go]" : {
+    "editor.insertSpaces" : false,
+    "editor.tabSize" : 4
   },
-  "javascript.implicitProjectConfig.experimentalDecorators": true,
-  "html.format.wrapLineLength": 60,
-  "editor.wordWrap": "on",
-  "editor.fontSize": 14,
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
-  "editor.formatOnSave": true,
-  "dart.flutterSdkPath": "/Users/shin/dev/flutter",
-  "prettier.disableLanguages": ["vue", "ts"],
-  "git.ignoreMissingGitWarning": true,
-  "vim.useSystemClipboard": true,
-  "vim.hlsearch": true,
-  "vim.visualstar": true
+  "editor.detectIndentation" : false,
+  "editor.insertSpaces" : true,
+  "prettier.semi" : false,
+  "dart.flutterSdkPath" : "\/Users\/shin\/dev\/flutter",
+  "editor.fontSize" : 14,
+  "prettier.disableLanguages" : [
+    "vue",
+    "ts"
+  ],
+  "git.ignoreMissingGitWarning" : true,
+  "redhat.telemetry.enabled" : false,
+  "vim.useSystemClipboard" : true,
+  "editor.accessibilitySupport" : "off",
+  "prettier.singleQuote" : true,
+  "workbench.startupEditor" : "none",
+  "[rust]" : {
+    "editor.insertSpaces" : true,
+    "editor.tabSize" : 4
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path.mac": "/Users/kasidasiPC1/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
+    "vs-kubernetes.ignore-recommendations": true,
+    "vs-kubernetes.crd-code-completion": "disabled",
+    "vs-kubernetes.minikube-show-information-expiration": "2023-07-30T22:06:19.068Z"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "go.toolsManagement.autoUpdate": true,
+  "github.copilot.enable": {
+    "*": false,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": true
+  },
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+  "terraform.experimentalFeatures.validateOnSave": true,
+  "workbench.editorAssociations": {
+    "*.txt": "default"
+  }
 }
