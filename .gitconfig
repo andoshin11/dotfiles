@@ -9,3 +9,5 @@
 [user]
 	name = andoshin11
 	email = shinglish11@gmail.com
+[init]
+	defaultBranch = main

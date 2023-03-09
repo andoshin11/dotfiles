@@ -3,3 +3,5 @@ tig
 tmux
 jq
 kubectl
+yq
+gh
