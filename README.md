@@ -82,6 +82,7 @@ $ make post-install ROLE=server
 
 - `~/.config/fish/config.fish` はマシン固有の設定（シークレット、ツールが追記する行など）用で、このリポジトリでは管理しません。共通設定は `fish/conf.d/dotfiles.fish` に書いてください。
 - プラグインを追加・削除したら `fish/fish_plugins` にも反映し、`fisher update` で同期します。
+- `npm` / `npx` / `yarn` / `pnpm` は、実行時だけ `gh auth token` の値を `GITHUB_TOKEN` として渡す関数で包んでいます。`.npmrc` の `//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}` で GitHub Packages を読むためで、`gh auth login` 時に `read:packages` の権限が必要です。`GITHUB_TOKEN` はシェル全体には設定しません。
 
 ## SSH（共通）
 
