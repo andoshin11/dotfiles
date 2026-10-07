@@ -35,6 +35,4 @@ if [ "$ROLE" = "server" ]; then
         ssh-keygen -t ed25519 -N "" -C "github-$(scutil --get LocalHostName)" -f "$GITHUB_KEY"
     fi
     echo "==> Register $GITHUB_KEY.pub on GitHub (Settings > SSH and GPG keys), then verify with: ssh -T git@github.com"
-else
-    echo "==> In 1Password: Settings > Developer > enable SSH agent, then verify with: ssh -T git@github.com"
 fi

@@ -16,15 +16,6 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 以下はスクリプト化できない作業です。`install.sh` の完了後に一度だけ実施してください。
 
-## SSH（`client`）
-
-1. 1Password を開いてサインインし、**Settings > Developer** で SSH agent を有効にします。
-2. （任意）承認ダイアログを減らしたい場合は、**Settings > Developer > Remember key approval** を固定時間（4 / 12 / 24 時間）に、**Ask approval for each new** を *For each new application* に設定します。
-3. 接続を確認します。
-   ```shell
-   $ ssh -T git@github.com
-   ```
-
 ## SSH（`server`）
 
 1. 生成された公開鍵を GitHub に登録します（**Settings > SSH and GPG keys > New SSH key**）。この鍵だけを個別に失効できるよう、マシンを識別できるタイトル（例: `mac-mini-server`）を付けてください。
