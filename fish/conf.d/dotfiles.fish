@@ -16,6 +16,8 @@ pyenv init - fish | source
 
 # env
 set -gx KUBECONFIG $HOME/.kube/config
+set -gx LANGUAGE ja
+set -gx TIMEZONE Asia/Tokyo
 
 # alias
 alias gs 'git status'
