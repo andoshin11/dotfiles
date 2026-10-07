@@ -31,6 +31,10 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 無人ジョブが止まらないよう、この鍵にはパスフレーズを設定していません。マシンの紛失や侵害が起きた場合は、直ちに GitHub でこの鍵を失効させてください。
 
+## VS Code
+
+設定・拡張機能・キーボードショートカットは、このリポジトリではなく VS Code の Settings Sync で管理します。VS Code を起動し、アカウントメニューの **Backup and Sync Settings** から GitHub アカウントでサインインしてください。
+
 ## fish
 
 - `~/.config/fish/config.fish` はマシン固有の設定（シークレット、ツールが追記する行など）用で、このリポジトリでは管理しません。共通設定は `fish/conf.d/dotfiles.fish` に書いてください。
@@ -63,7 +67,6 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - Mac App Store アプリのインストール（`mas`） :apple:
 - Node.js の Active LTS を nodebrew で導入し、yarn をインストール :earth_asia:
 - Terraform の最新安定版を tfenv で導入（バージョンは `~/.tfenv` に保存） :building_construction:
-- VSCode のセットアップ :pencil:
 - Python 3 の最新安定版を uv でインストール（ビルド済みバイナリ）し、`python` / `python3` を `~/.local/bin` に配置 :snake:
 - Claude Code のインストール（公式ネイティブインストーラー。自動更新される） :robot:
 
