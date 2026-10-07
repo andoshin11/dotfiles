@@ -11,9 +11,7 @@ fish_add_path --global $HOME/go/bin
 fish_add_path --global $HOME/.yarn/bin # `yarn global add` binaries
 fish_add_path --global /opt/homebrew/share/google-cloud-sdk/bin # extra gcloud components
 # tfenv's terraform is linked into /opt/homebrew/bin, so no extra PATH is needed
-
-# pyenv (adds ~/.pyenv/shims to PATH)
-pyenv init - fish | source
+set -gx TFENV_CONFIG_DIR $HOME/.tfenv # keep Terraform versions outside the Homebrew Cellar
 
 # env
 set -gx KUBECONFIG $HOME/.kube/config
