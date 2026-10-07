@@ -51,15 +51,16 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 `make init` コマンドで、`./scripts` 配下のすべてのスクリプトが初期化のために実行されます。
 
 - `etc/ssh/config.$ROLE` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記）。`server` の場合は GitHub 用の専用鍵を生成 :key:
-- Homebrew のインストール :beer:
+- Homebrew のインストールと `etc/Brewfile` の CLI・アプリの導入（`brew bundle`） :beer:
 - fish シェルのセットアップ :fish:
 - powerline フォントと fish テーマのインストール :art:
-- アプリのダウンロード :apple:
+- Mac App Store アプリのインストール（`mas`） :apple:
 - dein.vim のセットアップ :pencil2:
 - Node 環境のセットアップ :earth_asia:
 - Go 環境のセットアップ :muscle:
 - VSCode のセットアップ :pencil:
 - Google Cloud SDK のセットアップ :cloud:
+- Claude Code のインストール（公式ネイティブインストーラー。自動更新される） :robot:
 
 
 ## デプロイ

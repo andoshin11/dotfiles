@@ -3,6 +3,9 @@ EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml .zsh_alias .zshrc .vimrc
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 INSTALLERS := $(wildcard ./scripts/*sh)
 
+# Make Homebrew installed by 05_brew.sh visible to the following installers on a fresh machine
+export PATH := /opt/homebrew/bin:/opt/homebrew/sbin:$(PATH)
+
 .PHONY: list
 list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), /bin/ls -dF $(val);)
