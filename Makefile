@@ -1,5 +1,5 @@
 CANDIDATES := $(wildcard .??*)
-EXCLUSIONS := .DS_Store .git .gitignore .gitmodules .travis.yml .zsh_alias .zshrc .vimrc
+EXCLUSIONS := .DS_Store .git .github .gitignore .gitmodules .travis.yml .vimrc
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 INSTALLERS := $(wildcard ./scripts/*sh)
 

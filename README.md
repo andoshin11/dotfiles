@@ -61,11 +61,8 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - Homebrew のインストールと `etc/Brewfile` の CLI・アプリ・フォントの導入（`brew bundle`） :beer:
 - fish をログインシェルに設定し、共通設定 `fish/conf.d/dotfiles.fish` を `~/.config/fish/conf.d/` に symlink。`fish/fish_plugins` を初回のみコピーし、fisher でプラグイン（bobthefish など）を導入 :fish:
 - Mac App Store アプリのインストール（`mas`） :apple:
-- dein.vim のセットアップ :pencil2:
 - Node 環境のセットアップ :earth_asia:
-- Go 環境のセットアップ :muscle:
 - VSCode のセットアップ :pencil:
-- Google Cloud SDK のセットアップ :cloud:
 - Claude Code のインストール（公式ネイティブインストーラー。自動更新される） :robot:
 
 
@@ -74,8 +71,6 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 - .gitconfig
 - .tmux.conf
-- .vimrc
-- .zshrc
 
 # 連絡先
 Shin Ando (andoshin11)

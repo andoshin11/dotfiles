@@ -1,6 +1,0 @@
-alias gs="git status"
-alias gb="git branch"
-alias ga="git add ."
-alias cdd="cd ../"
-alias la="ls -a"
-
