@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 DOTPATH=~/dev/dotfiles
 GITHUB_URL=https://github.com/andoshin11/dotfiles
 TARBALL="${GITHUB_URL}/archive/master.tar.gz"
@@ -7,8 +9,7 @@ TARBALL="${GITHUB_URL}/archive/master.tar.gz"
 # utils commands
 # is_exists returns true if executable $1 exists in $PATH
 is_exists() {
-    which "$1" >/dev/null 2>&1
-    return $?
+    command -v "$1" >/dev/null 2>&1
 }
 
 # has is wrapper function
@@ -16,38 +17,33 @@ has() {
     is_exists "$@"
 }
 
-# die returns exit code error and echo error message
+# die prints an error message to stderr and exits with the given code
 die() {
-    e_error "$1" 1>&2
+    echo "ERROR: $1" >&2
     exit "${2:-1}"
 }
 
 # use git when available
 if has "git"; then
-    echo $GITHUB_URL
-    echo $TARBALL
-    git clone --recursive "$GITHUB_URL" "$DOTPATH"
+    echo "$GITHUB_URL"
+    git clone --recursive "$GITHUB_URL" "$DOTPATH" || die "git clone failed: $GITHUB_URL"
 
 # use curl or wget as a fallback
 elif has "curl" || has "wget"; then
+    echo "$TARBALL"
     if has "curl"; then
-        curl -L "$TARBALL"
-
-    elif has "wget"; then
+        curl -fsSL "$TARBALL"
+    else
         wget -O - "$TARBALL"
+    fi | tar xzf -
 
-    fi | tar xv -
-
+    mkdir -p "$(dirname "$DOTPATH")"
     mv -f dotfiles-master "$DOTPATH"
 
 else
-    die "curl or wget required"
+    die "git, curl or wget required"
 fi
 
-cd $DOTPATH
-if [ $? -ne 0]; then
-    die "not found: $DOTPATH"
-fi
+cd "$DOTPATH" || die "not found: $DOTPATH"
 
 make install
-
