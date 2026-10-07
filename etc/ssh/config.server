@@ -1,0 +1,4 @@
+# Dedicated unattended key for this server, registered on GitHub separately
+Host github.com
+  IdentityFile ~/.ssh/id_ed25519_github
+  IdentitiesOnly yes

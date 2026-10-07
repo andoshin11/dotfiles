@@ -19,8 +19,11 @@ update: ## Fetch changes for this repo
 push: ## Push changes to master
 	git push origin master
 
-init:
-	@$(foreach val, $(INSTALLERS), sh $(val);)
+check-role: ## Require ROLE=client|server
+	@case "$(ROLE)" in client|server) ;; *) echo 'ERROR: ROLE must be client or server (e.g. make install ROLE=server)' >&2; exit 1;; esac
+
+init: check-role
+	@$(foreach val, $(INSTALLERS), ROLE=$(ROLE) sh $(val);)
 
 install: init deploy
 	@exec $$SHELL
