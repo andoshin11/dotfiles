@@ -6,7 +6,7 @@ INSTALLERS := $(sort $(wildcard ./scripts/*.sh))
 # Make Homebrew installed by 05_brew.sh visible to the following installers on a fresh machine
 export PATH := /opt/homebrew/bin:/opt/homebrew/sbin:$(PATH)
 
-.PHONY: list deploy update push check-role init install
+.PHONY: list deploy update push check-role init install post-install
 list: ## Show dot files in this repo
 	@$(foreach val, $(DOTFILES), /bin/ls -dF $(val);)
 
@@ -34,3 +34,5 @@ init: check-role
 install: init deploy
 	@echo '==> Done. Open a new terminal to load the new shell settings.'
 
+post-install: check-role ## Walk through manual steps after install (re-runnable)
+	@ROLE=$(ROLE) bash bin/post-install.sh
