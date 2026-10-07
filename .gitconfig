@@ -11,3 +11,5 @@
 	email = shinglish11@gmail.com
 [init]
 	defaultBranch = main
+[pull]
+	ff = only
