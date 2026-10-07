@@ -10,7 +10,7 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 `ROLE` の指定は必須です。
 
 - `client`: 手元で操作するノート PC。SSH 鍵は 1Password の SSH agent から使います。
-- `server`: 常時稼働させてリモートから操作するマシン（Mac mini）。承認待ちで処理が止まらないよう、GitHub 用にパスフレーズなしの専用鍵を使います。
+- `server`: 常時稼働させてリモートから操作するマシン（Mac mini）。GitHub へは SSH 鍵ではなく `gh` の認証（HTTPS）でアクセスします。
 
 インストールの前に、下記の「インストール前の準備」を済ませてください。
 
@@ -65,12 +65,12 @@ $ make post-install ROLE=server
    ```shell
    $ op run --env-file=.env -- <command>
    ```
-4. **GitHub 用の鍵を登録する**：生成された公開鍵を GitHub に登録します（**Settings > SSH and GPG keys > New SSH key**）。この鍵だけを個別に失効できるよう、マシンを識別できるタイトル（例: `mac-mini-server`）を付けてください。
+4. **GitHub に gh でログインする**：git（HTTPS）と `gh` の両方がこの認証を使います。`make post-install` から実行されます。
    ```shell
-   $ cat ~/.ssh/id_ed25519_github.pub
-   $ ssh -T git@github.com
+   $ gh auth login --hostname github.com --git-protocol https --web --scopes read:packages
    ```
-   無人ジョブが止まらないよう、この鍵にはパスフレーズを設定していません。マシンの紛失や侵害が起きた場合は、直ちに GitHub でこの鍵を失効させ、1Password でサービスアカウントのトークンも失効させてください。
+   「Authenticate Git with your GitHub credentials?」には **n** と答えてください。git の認証に `gh` を使う設定は、このリポジトリの `.gitconfig` で管理しています（`~/.gitconfig` はこのリポジトリへの symlink なので、y だとリポジトリの `.gitconfig` が書き換わります）。`read:packages` は GitHub Packages（npm）を読むための権限です。
+   マシンの紛失や侵害が起きた場合は、GitHub の Settings → Applications で gh（GitHub CLI）の認証を取り消し、1Password でサービスアカウントのトークンも失効させてください。
 
 `16_server.sh` はスリープの無効化（画面のみ 10 分で消灯）、停電復旧後の自動起動、1Password の `authorized-keys` ノートからの公開鍵の登録、SSH の鍵認証のみ化を設定します。接続元の端末からは、Private vault の SSH 鍵を使って 1Password の SSH agent 経由でログインします。
 
@@ -104,7 +104,7 @@ $ make post-install ROLE=server
 ## 初期化
 `make init` コマンドで、`./scripts` 配下のスクリプトがファイル名順に実行されます。いずれかが失敗した時点で停止するので、原因を解消してから `make install ROLE=...` を再実行してください（各スクリプトは再実行しても安全です）。
 
-- `etc/ssh/config.$ROLE` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記）。`server` の場合は GitHub 用の専用鍵を生成 :key:
+- `~/.ssh` を作成。`client` の場合は `etc/ssh/config.client` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記） :key:
 - Homebrew のインストールと `etc/Brewfile` の CLI・アプリ・フォントの導入（`brew bundle`） :beer:
 - fish をログインシェルに設定し、共通設定 `fish/conf.d/dotfiles.fish` を `~/.config/fish/conf.d/` に symlink。`fish/fish_plugins` を初回のみコピーし、fisher でプラグイン（bobthefish など）を導入 :fish:
 - Mac App Store アプリのインストール（`mas`） :apple:

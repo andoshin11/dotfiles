@@ -11,7 +11,6 @@ esac
 
 SETTINGS="x-apple.systempreferences:"
 OP_TOKEN_FILE="$HOME/.config/op/service-account-token"
-GITHUB_KEY="$HOME/.ssh/id_ed25519_github"
 TAILSCALE=/Applications/Tailscale.app/Contents/MacOS/Tailscale
 SKIPPED=()
 
@@ -33,15 +32,16 @@ check_op() {
     [ -s "$OP_TOKEN_FILE" ] && OP_SERVICE_ACCOUNT_TOKEN=$(cat "$OP_TOKEN_FILE") op whoami >/dev/null 2>&1
 }
 
-check_github_key() {
-    ssh -T -o BatchMode=yes -o StrictHostKeyChecking=accept-new git@github.com 2>&1 |
-        grep -q "successfully authenticated"
+# git over HTTPS uses gh as the credential helper (configured in the tracked .gitconfig)
+check_gh() {
+    gh auth status --hostname github.com >/dev/null 2>&1 &&
+        git config --get-all credential.https://github.com.helper | grep -q 'gh auth git-credential'
 }
 
 # --- runner -----------------------------------------------------------------
 
 # step <title> <check function> <action> <instructions...>
-# action: a System Settings pane id, an app name prefixed with "app:", a URL, or "-" for none
+# action: a System Settings pane id, "app:<name>", "cmd:<command>", a URL, or "-" for none
 step() {
     local title=$1 check=$2 action=$3
     shift 3
@@ -58,6 +58,7 @@ step() {
         case "$action" in
         -) ;;
         app:*) open -a "${action#app:}" ;;
+        cmd:*) bash -c "${action#cmd:}" </dev/tty || true ;;
         https://*) open "$action" ;;
         *) open "$SETTINGS$action" ;;
         esac
@@ -95,13 +96,9 @@ if [ "$ROLE" = "server" ]; then
         "$OP_TOKEN_FILE にトークンを置く（README「インストール前の準備」参照）。" \
         "ディレクトリのパーミッションは 700、ファイルは 600 にしてください。"
 
-    if [ -f "$GITHUB_KEY.pub" ] && ! check_github_key; then
-        pbcopy <"$GITHUB_KEY.pub"
-        echo
-        echo "  GitHub 用の公開鍵をクリップボードにコピーしました: $GITHUB_KEY.pub"
-    fi
-    step "GitHub に Mac mini 専用の鍵を登録する" check_github_key https://github.com/settings/ssh/new \
-        "Title に端末が分かる名前（例: mac-mini-server）を入れ、Key に貼り付けて登録する。"
+    step "GitHub に gh でログインする" check_gh "cmd:gh auth login --hostname github.com --git-protocol https --web --scopes read:packages" \
+        "ブラウザで認証する。「Authenticate Git with your GitHub credentials?」には n と答える" \
+        "（git の認証設定は .gitconfig で管理済みのため。y だとリポジトリの .gitconfig が書き換わります）"
 fi
 
 echo
