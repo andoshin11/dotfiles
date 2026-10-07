@@ -18,7 +18,7 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 ## 共通
 
-- **App Store にサインイン**しておく（`server` は初回セットアップの完了後に行う）。`mas` による Mac App Store アプリのインストールは、未サインインだと応答待ちのまま停止します。
+- **App Store にサインイン**しておく（初回セットアップで Apple アカウントにサインインしていれば不要）。`mas` による Mac App Store アプリのインストールは、未サインインだと応答待ちのまま停止します。
 
 ## 1Password（`server`、新しい端末を用意する前に別の端末で実施）
 
@@ -37,7 +37,7 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 `scripts/16_server.sh` は、FileVault がオンのとき、またはサービスアカウントのトークンがないときにエラーで停止します。
 
-1. **FileVault をオフにする**：停電・アップデート後の再起動でパスワード入力待ちにならないようにします。初回セットアップで Apple アカウントにサインインすると FileVault は自動でオンになるため、初回セットアップでは Apple アカウントにサインインせず、FileVault をスキップする（App Store へのサインインはセットアップ後に行う）。オンになっている場合は、システム設定 → プライバシーとセキュリティ → FileVault でオフにし、復号の完了を待つ。
+1. **FileVault をオフにする**：停電・アップデート後の再起動でパスワード入力待ちにならないようにします。初回セットアップで Apple アカウントにサインインすると FileVault は自動でオンになるため、セットアップ完了後にシステム設定 → プライバシーとセキュリティ → FileVault でオフにし、復号の完了を待つ。状態は `fdesetup status` で確認できます（`FileVault is Off.` になれば完了）。
 2. **リモートログイン**：システム設定 → 一般 → 共有 → 「リモートログイン」をオンにする。
 3. **サービスアカウントのトークンを置く**：1Password に保存したトークンを貼り付けて Ctrl-D で確定する（シェルの履歴に残さないため）。
    ```shell
