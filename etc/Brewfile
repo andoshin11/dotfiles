@@ -1,8 +1,6 @@
-# Taps
 tap "siderolabs/tap"
 tap "stablyai/orca"
 
-# CLI
 brew "age"
 brew "awscli"
 brew "etcd"
@@ -16,7 +14,6 @@ brew "jq"
 brew "kubectl"
 brew "nodebrew"
 brew "pyenv"
-# Official Sidero Labs tap, same as the current install (home-k8s maintenance)
 brew "siderolabs/tap/talosctl"
 brew "tfenv"
 brew "the_silver_searcher"
@@ -24,7 +21,6 @@ brew "tig"
 brew "tmux"
 brew "yq"
 
-# Apps
 cask "1password"
 cask "1password-cli"
 cask "alfred"
@@ -37,10 +33,10 @@ cask "codex"
 cask "docker-desktop"
 cask "dropbox"
 cask "figma"
+cask "font-dejavu-sans-mono-for-powerline"
 cask "google-chrome"
 cask "iterm2"
 cask "lens"
-# Full name: core cask "orca" is an unrelated Plotly tool
 cask "stablyai/orca/orca"
 cask "slack"
 cask "spotify"

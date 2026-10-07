@@ -58,9 +58,8 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 `make init` コマンドで、`./scripts` 配下のすべてのスクリプトが初期化のために実行されます。
 
 - `etc/ssh/config.$ROLE` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記）。`server` の場合は GitHub 用の専用鍵を生成 :key:
-- Homebrew のインストールと `etc/Brewfile` の CLI・アプリの導入（`brew bundle`） :beer:
+- Homebrew のインストールと `etc/Brewfile` の CLI・アプリ・フォントの導入（`brew bundle`） :beer:
 - fish をログインシェルに設定し、共通設定 `fish/conf.d/dotfiles.fish` を `~/.config/fish/conf.d/` に symlink。`fish/fish_plugins` を初回のみコピーし、fisher でプラグイン（bobthefish など）を導入 :fish:
-- powerline フォントのインストール :art:
 - Mac App Store アプリのインストール（`mas`） :apple:
 - dein.vim のセットアップ :pencil2:
 - Node 環境のセットアップ :earth_asia:
