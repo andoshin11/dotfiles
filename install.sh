@@ -23,6 +23,11 @@ die() {
     exit "${2:-1}"
 }
 
+case "${ROLE:-}" in
+client | server) ;;
+*) die "ROLE must be client or server (e.g. ROLE=server bash install.sh)" ;;
+esac
+
 # use git when available
 if has "git"; then
     echo "$GITHUB_URL"
@@ -46,4 +51,4 @@ fi
 
 cd "$DOTPATH" || die "not found: $DOTPATH"
 
-make install
+make install ROLE="$ROLE"
