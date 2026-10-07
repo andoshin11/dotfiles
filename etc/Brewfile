@@ -1,4 +1,5 @@
 # Taps
+tap "siderolabs/tap"
 tap "stablyai/orca"
 
 # CLI
@@ -10,6 +11,8 @@ brew "git"
 brew "go"
 brew "jq"
 brew "kubectl"
+# Official Sidero Labs tap, same as the current install (home-k8s maintenance)
+brew "siderolabs/tap/talosctl"
 brew "the_silver_searcher"
 brew "tig"
 brew "tmux"
