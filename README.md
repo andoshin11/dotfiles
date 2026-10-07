@@ -31,6 +31,11 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 無人ジョブが止まらないよう、この鍵にはパスフレーズを設定していません。マシンの紛失や侵害が起きた場合は、直ちに GitHub でこの鍵を失効させてください。
 
+## fish
+
+- `~/.config/fish/config.fish` はマシン固有の設定（シークレット、ツールが追記する行など）用で、このリポジトリでは管理しません。共通設定は `fish/conf.d/dotfiles.fish` に書いてください。
+- プラグインを追加・削除したら `fish/fish_plugins` にも反映し、`fisher update` で同期します。
+
 ## SSH（共通）
 
 - `~/.ssh/config` は、存在しない場合に限り `etc/ssh/config.$ROLE` からコピーされます。マシン固有のホスト（業務用の踏み台など）は `~/.ssh/config` に直接記述し、このリポジトリには含めないでください。
@@ -54,8 +59,8 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 - `etc/ssh/config.$ROLE` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記）。`server` の場合は GitHub 用の専用鍵を生成 :key:
 - Homebrew のインストールと `etc/Brewfile` の CLI・アプリの導入（`brew bundle`） :beer:
-- fish シェルのセットアップ :fish:
-- powerline フォントと fish テーマのインストール :art:
+- fish をログインシェルに設定し、共通設定 `fish/conf.d/dotfiles.fish` を `~/.config/fish/conf.d/` に symlink。`fish/fish_plugins` を初回のみコピーし、fisher でプラグイン（bobthefish など）を導入 :fish:
+- powerline フォントのインストール :art:
 - Mac App Store アプリのインストール（`mas`） :apple:
 - dein.vim のセットアップ :pencil2:
 - Node 環境のセットアップ :earth_asia:
