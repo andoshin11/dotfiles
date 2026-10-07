@@ -37,6 +37,8 @@ cask "codex"
 cask "docker-desktop"
 cask "dropbox"
 cask "figma"
+# Terminal font used by iTerm2 and the bobthefish prompt
+cask "font-dejavu-sans-mono-for-powerline"
 cask "google-chrome"
 cask "iterm2"
 cask "lens"
