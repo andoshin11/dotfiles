@@ -1,3 +1,6 @@
+# Taps
+tap "stablyai/orca"
+
 # CLI
 brew "awscli"
 brew "fish"
@@ -23,10 +26,11 @@ cask "clipy"
 cask "docker-desktop"
 cask "dropbox"
 cask "figma"
-cask "firefox"
 cask "google-chrome"
 cask "iterm2"
 cask "lens"
+# Full name: core cask "orca" is an unrelated Plotly tool
+cask "stablyai/orca/orca"
 cask "slack"
 cask "spotify"
 cask "tableplus"

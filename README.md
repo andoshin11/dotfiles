@@ -12,6 +12,8 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - `client`: 手元で操作するノート PC。SSH 鍵は 1Password の SSH agent から使います。
 - `server`: 常時稼働させてリモートから操作するマシン（Mac mini）。承認待ちで処理が止まらないよう、GitHub 用にパスフレーズなしの専用鍵を使います。
 
+実行前に **App Store にサインイン**しておいてください。`mas` による Mac App Store アプリのインストールは、未サインインだと応答待ちのまま停止します。
+
 # インストール後の手作業 :hand:
 
 以下はスクリプト化できない作業です。`install.sh` の完了後に一度だけ実施してください。
