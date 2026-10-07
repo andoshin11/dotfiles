@@ -61,8 +61,10 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - Homebrew のインストールと `etc/Brewfile` の CLI・アプリ・フォントの導入（`brew bundle`） :beer:
 - fish をログインシェルに設定し、共通設定 `fish/conf.d/dotfiles.fish` を `~/.config/fish/conf.d/` に symlink。`fish/fish_plugins` を初回のみコピーし、fisher でプラグイン（bobthefish など）を導入 :fish:
 - Mac App Store アプリのインストール（`mas`） :apple:
-- Node 環境のセットアップ :earth_asia:
+- Node.js の Active LTS を nodebrew で導入し、yarn をインストール :earth_asia:
+- Terraform の最新安定版を tfenv で導入（バージョンは `~/.tfenv` に保存） :building_construction:
 - VSCode のセットアップ :pencil:
+- Python 3 の最新安定版を uv でインストール（ビルド済みバイナリ）し、`python` / `python3` を `~/.local/bin` に配置 :snake:
 - Claude Code のインストール（公式ネイティブインストーラー。自動更新される） :robot:
 
 
