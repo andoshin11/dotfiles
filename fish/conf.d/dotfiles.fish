@@ -9,6 +9,7 @@ fish_add_path --global $HOME/.local/bin # Claude Code native installer
 fish_add_path --global $HOME/.nodebrew/current/bin
 fish_add_path --global $HOME/go/bin
 fish_add_path --global $HOME/.yarn/bin # `yarn global add` binaries
+fish_add_path --global /opt/homebrew/share/google-cloud-sdk/bin # extra gcloud components
 # tfenv's terraform is linked into /opt/homebrew/bin, so no extra PATH is needed
 
 # pyenv (adds ~/.pyenv/shims to PATH)
