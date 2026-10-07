@@ -1,6 +1,7 @@
 name: CI
 
-on: [push, pull_request]
+# Temporarily manual-only until setup scripts are reworked (mas hangs on CI)
+on: workflow_dispatch
 
 jobs:
   test:
