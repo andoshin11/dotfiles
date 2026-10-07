@@ -46,7 +46,11 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 
 # インストール後の手作業 :hand:
 
-以下はスクリプト化できない作業です。`install.sh` の完了後に一度だけ実施してください。
+以下はスクリプト化できない作業です。`install.sh` の完了後に、次のコマンドで 1 つずつ案内を受けながら進められます。各手順の完了はコマンドで確認され、完了済みの手順は飛ばされるので、何度でも再実行できます。
+
+```shell
+$ make post-install ROLE=server
+```
 
 ## サーバー（`server`）
 
