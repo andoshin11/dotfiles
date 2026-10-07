@@ -24,6 +24,13 @@ if test -f $HOME/.config/op/service-account-token
     end
 end
 
+# GitHub Packages: pass the gh token to package managers only, for `${GITHUB_TOKEN}` in .npmrc
+for cmd in npm npx yarn pnpm
+    function $cmd --inherit-variable cmd
+        GITHUB_TOKEN=(gh auth token 2>/dev/null) command $cmd $argv
+    end
+end
+
 # alias
 alias gs 'git status'
 alias gb 'git branch'
