@@ -59,7 +59,7 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 `install.sh` は、環境に応じてこのリポジトリを clone またはダウンロードします。
 
 ## 初期化
-`make init` コマンドで、`./scripts` 配下のすべてのスクリプトが初期化のために実行されます。
+`make init` コマンドで、`./scripts` 配下のスクリプトがファイル名順に実行されます。いずれかが失敗した時点で停止するので、原因を解消してから `make install ROLE=...` を再実行してください（各スクリプトは再実行しても安全です）。
 
 - `etc/ssh/config.$ROLE` を初期テンプレートとして `~/.ssh/config` にコピー（既に存在する場合はスキップ。マシン固有のホストはそこに直接追記）。`server` の場合は GitHub 用の専用鍵を生成 :key:
 - Homebrew のインストールと `etc/Brewfile` の CLI・アプリ・フォントの導入（`brew bundle`） :beer:
