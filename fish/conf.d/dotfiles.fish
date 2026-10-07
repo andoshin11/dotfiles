@@ -17,6 +17,13 @@ set -gx LANGUAGE ja
 set -gx TIMEZONE Asia/Tokyo
 set -gx TFENV_CONFIG_DIR $HOME/.tfenv # keep Terraform versions outside the Homebrew Cellar
 
+# 1Password service account (server): pass the token to `op` only, not to every process
+if test -f $HOME/.config/op/service-account-token
+    function op
+        OP_SERVICE_ACCOUNT_TOKEN=(cat $HOME/.config/op/service-account-token) command op $argv
+    end
+end
+
 # alias
 alias gs 'git status'
 alias gb 'git branch'

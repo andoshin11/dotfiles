@@ -12,24 +12,71 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - `client`: 手元で操作するノート PC。SSH 鍵は 1Password の SSH agent から使います。
 - `server`: 常時稼働させてリモートから操作するマシン（Mac mini）。承認待ちで処理が止まらないよう、GitHub 用にパスフレーズなしの専用鍵を使います。
 
-実行前に **App Store にサインイン**しておいてください。`mas` による Mac App Store アプリのインストールは、未サインインだと応答待ちのまま停止します。
+インストールの前に、下記の「インストール前の準備」を済ませてください。
+
+# インストール前の準備 :clipboard:
+
+## 共通
+
+- **App Store にサインイン**しておく。`mas` による Mac App Store アプリのインストールは、未サインインだと応答待ちのまま停止します。
+
+## 1Password（`server`、新しい端末を用意する前に別の端末で実施）
+
+サーバーは 1Password のサービスアカウント経由で、その端末専用の vault だけを読み取ります。サービスアカウントの権限（アクセスできる vault と読み書き）は作成後に変更できないため、先に vault を用意します。
+
+1. **端末専用の vault を作る**：1Password で新しい vault（例: `mac-mini`）を作成し、その端末で使うシークレット（API キーなど）だけを入れる。Personal / Private / Employee vault と既定の Shared vault はサービスアカウントに許可できません。
+2. **サービスアカウントを作る**：1Password.com の Developer → Service Accounts から、上の vault への**読み取り専用**の権限で作成する（CLI の場合は下記）。
+   ```shell
+   $ op service-account create mac-mini --vault mac-mini:read_items
+   ```
+3. **トークンを保存する**：トークンは作成時に一度しか表示されません。すぐに自分の Private vault に保存してください。
+
+## サーバー（`server`、新しい端末で実施）
+
+`scripts/16_server.sh` は、FileVault がオンのとき、または `~/.ssh/authorized_keys` がないときにエラーで停止します。
+
+1. **FileVault をオフにする**：初回セットアップで FileVault をオンにしない。オンになっている場合は `sudo fdesetup disable` を実行し、復号の完了を待つ（停電・アップデート後の再起動でパスワード入力待ちにならないように）。
+2. **リモートログイン**：システム設定 → 一般 → 共有 → 「リモートログイン」をオンにする。
+3. **SSH ログイン用の鍵ペアを作る**：この端末に SSH でログインするための専用の鍵を作り、公開鍵を `authorized_keys` に登録する。秘密鍵はインストール後に 1Password へ移します。
+   ```shell
+   $ mkdir -p ~/.ssh && chmod 700 ~/.ssh
+   $ ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_login -C "login@$(scutil --get LocalHostName)"
+   $ cat ~/.ssh/id_ed25519_login.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+   ```
+4. **サービスアカウントのトークンを置く**：1Password に保存したトークンを貼り付けて Ctrl-D で確定する（シェルの履歴に残さないため）。
+   ```shell
+   $ (umask 077; mkdir -p ~/.config/op && cat > ~/.config/op/service-account-token)
+   ```
 
 # インストール後の手作業 :hand:
 
 以下はスクリプト化できない作業です。`install.sh` の完了後に一度だけ実施してください。
 
-## SSH（`server`）
+## サーバー（`server`）
 
-1. 生成された公開鍵を GitHub に登録します（**Settings > SSH and GPG keys > New SSH key**）。この鍵だけを個別に失効できるよう、マシンを識別できるタイトル（例: `mac-mini-server`）を付けてください。
+1. **SSH ログイン用の秘密鍵を 1Password へ移す**：`~/.ssh/id_ed25519_login` を 1Password に SSH 鍵として取り込み、取り込めたら端末上の秘密鍵を削除する。接続元の端末からは 1Password の SSH agent 経由でログインします。この鍵は他の用途（GitHub など）に使い回さないでください。
+   ```shell
+   $ rm ~/.ssh/id_ed25519_login
+   ```
+2. **自動ログイン**：システム設定 → ユーザとグループ → 「自動ログイン」で自分のユーザーを選ぶ（再起動後にアプリが自動起動するように）。
+3. **Tailscale**：アプリを起動してログインし、ログイン時に自動起動するよう設定する。
+4. **1Password CLI を確認する**：`fish/conf.d/dotfiles.fish` は、トークンのファイルがある場合に限り `op` の実行時だけトークンを渡します（シェル全体の環境変数にはしません）。
+   ```shell
+   $ op whoami       # サービスアカウントとして認証されていること
+   $ op vault list   # 端末専用の vault だけが見えること
+   ```
+   シークレットをアプリに渡すときは、`op://` 参照を書いた env ファイルと `op run` を使います。
+   ```shell
+   $ op run --env-file=.env -- <command>
+   ```
+5. **GitHub 用の鍵を登録する**：生成された公開鍵を GitHub に登録します（**Settings > SSH and GPG keys > New SSH key**）。この鍵だけを個別に失効できるよう、マシンを識別できるタイトル（例: `mac-mini-server`）を付けてください。
    ```shell
    $ cat ~/.ssh/id_ed25519_github.pub
-   ```
-2. 接続を確認します。
-   ```shell
    $ ssh -T git@github.com
    ```
+   無人ジョブが止まらないよう、この鍵にはパスフレーズを設定していません。マシンの紛失や侵害が起きた場合は、直ちに GitHub でこの鍵を失効させ、1Password でサービスアカウントのトークンも失効させてください。
 
-無人ジョブが止まらないよう、この鍵にはパスフレーズを設定していません。マシンの紛失や侵害が起きた場合は、直ちに GitHub でこの鍵を失効させてください。
+`16_server.sh` はスリープの無効化（画面のみ 10 分で消灯）、停電復旧後の自動起動、SSH の鍵認証のみ化を設定します。
 
 ## VS Code
 
@@ -69,6 +116,7 @@ $ curl -fsSL https://raw.githubusercontent.com/andoshin11/dotfiles/master/instal
 - Terraform の最新安定版を tfenv で導入（バージョンは `~/.tfenv` に保存） :building_construction:
 - Python 3 の最新安定版を uv でインストール（ビルド済みバイナリ）し、`python` / `python3` を `~/.local/bin` に配置 :snake:
 - Claude Code のインストール（公式ネイティブインストーラー。自動更新される） :robot:
+- `server` の場合のみ、スリープ無効化・停電復旧後の自動起動・SSH の鍵認証のみ化を設定 :desktop_computer:
 
 
 ## デプロイ
