@@ -45,6 +45,10 @@ done
 # Refuse to disable passwords until a key is in place, to avoid a lockout
 [ -s "$AUTHORIZED_KEYS" ] || die "$AUTHORIZED_KEYS is empty"
 
+# macOS only creates host keys on the first SSH connection, and sshd -t fails without them.
+# -A generates just the missing key types and leaves existing ones alone.
+sudo ssh-keygen -A
+
 sudo install -m 644 "$PWD/etc/ssh/sshd_config.d/050-dotfiles.conf" "$SSHD_DROPIN"
 if ! sudo sshd -t; then
     sudo rm -f "$SSHD_DROPIN"
