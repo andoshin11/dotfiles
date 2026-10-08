@@ -23,5 +23,13 @@ fi
 
 eval "$("$BREW_PREFIX/bin/brew" shellenv)"
 
+# Homebrew refuses to load formulae/casks from untrusted third-party taps, and
+# `brew bundle` does not trust them on its own. Trust the fully qualified
+# (user/tap/name) entries listed in the Brewfile.
+awk -F'"' '/^(brew|cask) "[^"\/]+\/[^"\/]+\/[^"\/]+"/ { print $1 $2 }' "$BREWFILE" |
+    while read -r type name; do
+        brew trust --"$( [ "$type" = brew ] && echo formula || echo cask )" "$name"
+    done
+
 # Ensure presence only; upgrades are done deliberately with `brew upgrade`
 brew bundle install --no-upgrade --file="$BREWFILE"
