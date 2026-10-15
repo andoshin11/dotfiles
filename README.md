@@ -122,6 +122,11 @@ $ make post-install ROLE=server
 - .gitconfig
 - .tmux.conf
 
+`orca/` 配下のコマンドは `~/.local/bin` にシンボリックリンクされます。
+
+- `orca-cleanup-merged-worktrees`：Orca の automation が作った worktree（`auto-<name>-run-<n>-…`）のうち、PR がマージ済みのものと、PR もコミットも無いものを `orca worktree rm` で消す。あわせて、Orca がそのとき切った空のブランチも消す。手で作った worktree・ブランチは消さない。`--dry-run` で消すものを表示するだけ、`--check` で消すものがあれば 0 で終わる（automation の `--precheck` 用）
+- `orca-precheck-no-open-pr <owner/repo> <branch-prefix>`：ブランチ名が `<branch-prefix>` で始まる open な PR があれば 1 で終わる（automation の `--precheck` 用。修正待ちの PR が残っている日は automation を飛ばす）
+
 # 連絡先
 Shin Ando (andoshin11)
 

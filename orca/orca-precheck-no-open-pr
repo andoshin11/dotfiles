@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Orca の automation の --precheck 用。
+# <owner/repo> に、ブランチ名が <prefix> で始まる open な PR があれば 1 で終わる（その回は skipped になる）。
+# gh が失敗したときも 0 以外で終わるので、その回は飛ばされる（判定できないまま PR を増やさない）。
+#
+#   orca-precheck-no-open-pr Medixpost/medixpost-frontend sentry/
+set -euo pipefail
+export PATH="/opt/homebrew/bin:$PATH"
+
+if [ $# -ne 2 ]; then
+  echo "usage: $0 <owner/repo> <branch-prefix>" >&2
+  exit 2
+fi
+repo=$1
+prefix=$2
+
+prs=$(gh pr list -R "$repo" --state open --limit 200 --json number,headRefName \
+  --jq "[.[] | select(.headRefName | startswith(\"$prefix\")) | \"#\(.number) \(.headRefName)\"] | join(\", \")")
+
+if [ -n "$prs" ]; then
+  echo "skip: open な PR がある（$prs）"
+  exit 1
+fi
+echo "ok: $prefix の open な PR は無い"
