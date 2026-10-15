@@ -1,0 +1,220 @@
+#!/usr/bin/env python3
+"""Orca の automation が作った worktree（workspace）のうち、片付けてよいものを `orca worktree rm` で消す。
+
+対象は automation が作った worktree（ディレクトリ名が auto-<name>-run-<n>-...）だけ。手で作ったものは消さない。
+そのうち、未コミットの変更・追跡されていないファイルが無く、しばらく触っていないもので、次のどちらかを消す:
+  1. ブランチの PR がマージ済みで、手元の HEAD が PR の最後のコミットと同じもの
+  2. PR が無く、リモートのデフォルトブランチより先のコミットが無いもの（「修正なし」で終わった回など）
+
+消さないもの: ピン留め、未読の印が付いたもの（PR がマージ済みなら未読でも消す）、
+open・closed の PR があるもの、マージの後にコミットしたもの、判定できなかったもの。
+
+あわせて、automation の worktree を作るときに Orca が切ったブランチ（<user>/auto-<name>-run-<n>-...）のうち、
+どの worktree でも checkout されておらず、リモートのデフォルトブランチより先のコミットが無いものを消す
+（エージェントが別のブランチに切り替えると、worktree を消してもこのブランチが残る）。
+
+  orca-cleanup-merged-worktrees            # 消す
+  orca-cleanup-merged-worktrees --dry-run  # 消すものを表示するだけ
+  orca-cleanup-merged-worktrees --check    # 消すものがあれば 0、無ければ 1（automation の --precheck 用）
+"""
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from datetime import datetime
+
+os.environ["PATH"] = "/opt/homebrew/bin:" + os.path.expanduser("~/.local/bin:") + os.environ.get("PATH", "")
+
+AUTOMATION_DIR = re.compile(r"^auto-.+-run-\d+-")
+
+
+def run(cmd, cwd=None):
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+
+
+def orca_json(*args):
+    p = run(["orca", *args, "--json"])
+    if p.returncode != 0:
+        raise RuntimeError(f"orca {' '.join(args)}: {p.stderr.strip() or p.stdout.strip()}")
+    return json.loads(p.stdout)["result"]
+
+
+def git(path, *args):
+    p = run(["git", "-C", path, *args])
+    if p.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)}: {p.stderr.strip()}")
+    return p.stdout.strip()
+
+
+def hours_since(ms):
+    return (time.time() * 1000 - ms) / 3_600_000 if ms else float("inf")
+
+
+def judge(w, min_age_hours):
+    """(消すか, 理由) を返す。"""
+    path = w["path"]
+    branch = (w.get("branch") or "").removeprefix("refs/heads/")
+    if w.get("isMainWorktree") or w.get("isBare"):
+        return False, "メインの checkout"
+    if not AUTOMATION_DIR.match(os.path.basename(path)):
+        return False, "automation が作った worktree ではない"
+    if w.get("isPinned"):
+        return False, "ピン留め"
+    if not branch:
+        return False, "ブランチが無い（detached）"
+    if not os.path.isdir(path):
+        return False, "ディレクトリが無い"
+    if hours_since(w.get("lastActivityAt")) < min_age_hours:
+        return False, f"{min_age_hours} 時間以内に操作がある"
+    if git(path, "status", "--porcelain"):
+        return False, "未コミットの変更か、追跡されていないファイルがある"
+
+    p = run(["gh", "pr", "list", "--head", branch, "--state", "all", "--limit", "20",
+             "--json", "number,state,headRefOid,mergedAt"], cwd=path)
+    if p.returncode != 0:
+        return False, f"PR を取得できない（{p.stderr.strip()[:80]}）"
+    prs = json.loads(p.stdout)
+    head = git(path, "rev-parse", "HEAD")
+
+    merged = [pr for pr in prs if pr["state"] == "MERGED"]
+    if any(pr["state"] == "OPEN" for pr in prs):
+        return False, "open な PR がある"
+    if merged:
+        pr = max(merged, key=lambda pr: pr["mergedAt"])
+        if pr["headRefOid"] != head:
+            return False, f"#{pr['number']} のマージの後にコミットがある"
+        merged_at = datetime.fromisoformat(pr["mergedAt"].replace("Z", "+00:00")).timestamp() * 1000
+        if hours_since(merged_at) < min_age_hours:
+            return False, f"#{pr['number']} のマージから {min_age_hours} 時間たっていない"
+        return True, f"#{pr['number']} がマージ済み"
+    if prs:
+        return False, "マージされずに閉じた PR がある"
+
+    if w.get("isUnread"):
+        return False, "未読の印が付いている"
+    run(["git", "-C", path, "fetch", "--quiet", "origin"])
+    default = run(["git", "-C", path, "symbolic-ref", "--short", "refs/remotes/origin/HEAD"]).stdout.strip() or "origin/master"
+    ahead = git(path, "rev-list", "--count", f"{default}..HEAD")
+    if ahead != "0":
+        return False, f"PR の無いコミットが {ahead} 件ある"
+    return True, "PR もコミットも無い"
+
+
+def in_use(path):
+    """path の中を cwd にしているか、中のファイルを開いているプロセスがあれば True。"""
+    p = run(["lsof", "-n", "+D", path])
+    return bool(p.stdout.strip())
+
+
+def remove(w):
+    """(消せたか, エラー) を返す。"""
+    selector = f"id:{w['id']}"
+    p = run(["orca", "worktree", "rm", "--worktree", selector, "--json"])
+    if p.returncode == 0:
+        return True, ""
+    err = (p.stderr or p.stdout).strip()
+    # stablyai/orca#26090: daemon の入れ替わりの後、止まった古い daemon にもターミナルの停止を頼んで失敗し、
+    # 削除を断る。この場合だけ、worktree を使っているプロセスが無いことを確かめてから --force で消し直す
+    if "terminal sweep failed" in err and "ECONNREFUSED" in err:
+        if in_use(w["path"]):
+            return False, "古い daemon のエラー（#26090）だが、worktree を使っているプロセスがあるので --force しない"
+        p = run(["orca", "worktree", "rm", "--worktree", selector, "--force", "--json"])
+        if p.returncode == 0:
+            return True, ""
+        err = (p.stderr or p.stdout).strip()
+    try:
+        err = json.loads(err)["error"]["message"]
+    except Exception:
+        pass
+    return False, err[:300]
+
+
+def empty_automation_branches():
+    """[(リポジトリのパス, ブランチ)] を返す。automation が切ったブランチのうち、checkout されておらず、コミットも無いもの。"""
+    found = []
+    for repo in orca_json("repo", "list")["repos"]:
+        path = repo.get("path")
+        if repo.get("kind") != "git" or not path or not os.path.isdir(path):
+            continue
+        try:
+            branches = git(path, "for-each-ref", "--format=%(refname:short)", "refs/heads/").splitlines()
+            branches = [b for b in branches if AUTOMATION_DIR.match(b.rsplit("/", 1)[-1])]
+            if not branches:
+                continue
+            checked_out = {
+                line.removeprefix("branch refs/heads/")
+                for line in git(path, "worktree", "list", "--porcelain").splitlines()
+                if line.startswith("branch ")
+            }
+            run(["git", "-C", path, "fetch", "--quiet", "origin"])
+            default = run(["git", "-C", path, "symbolic-ref", "--short", "refs/remotes/origin/HEAD"]).stdout.strip() or "origin/master"
+            for b in branches:
+                if b not in checked_out and git(path, "rev-list", "--count", f"{default}..{b}") == "0":
+                    found.append((path, b))
+        except Exception as e:  # 判定できないリポジトリは飛ばす
+            print(f"ブランチを調べられない: {path} — {e}")
+    return found
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--check", action="store_true")
+    ap.add_argument("--min-age-hours", type=float, default=2)
+    args = ap.parse_args()
+
+    worktrees = orca_json("worktree", "list")["worktrees"]
+    targets, kept = [], []
+    for w in worktrees:
+        try:
+            ok, reason = judge(w, args.min_age_hours)
+        except Exception as e:  # 判定できないものは消さない
+            ok, reason = False, f"判定できない（{e}）"
+        (targets if ok else kept).append((w, reason))
+
+    if args.check:
+        branches = empty_automation_branches()
+        print(f"消す対象: worktree {len(targets)} 件・ブランチ {len(branches)} 件")
+        sys.exit(0 if targets or branches else 1)
+
+    failed = 0
+    for w, reason in targets:
+        label = f"{w.get('displayName')} ({w['path']})"
+        if args.dry_run:
+            print(f"[dry-run] 消す: {label} — {reason}")
+            continue
+        ok, err = remove(w)
+        if ok:
+            print(f"消した: {label} — {reason}")
+        else:
+            failed += 1
+            print(f"消せなかった: {label} — {err}")
+    for w, reason in kept:
+        if AUTOMATION_DIR.match(os.path.basename(w["path"])):
+            print(f"残す: {w.get('displayName')} ({w['path']}) — {reason}")
+    # worktree を消した後に調べる（消した worktree のブランチが checkout から外れるので、ここで拾える）
+    branch_done = 0
+    worktree_failed = failed
+    for path, b in empty_automation_branches():
+        if args.dry_run:
+            print(f"[dry-run] ブランチを消す: {b}（{path}）")
+            continue
+        p = run(["git", "-C", path, "branch", "-D", b])
+        if p.returncode == 0:
+            branch_done += 1
+            print(f"ブランチを消した: {b}（{path}）")
+        else:
+            failed += 1
+            print(f"ブランチを消せなかった: {b}（{path}） — {p.stderr.strip()[:200]}")
+    done = 0 if args.dry_run else len(targets) - worktree_failed + branch_done
+    print(f"まとめ: 消した {done} 件・消せなかった {failed} 件・残した {sum(1 for w, _ in kept if AUTOMATION_DIR.match(os.path.basename(w['path'])))} 件"
+          + ("（dry-run）" if args.dry_run else ""))
+    sys.exit(1 if failed else 0)
+
+
+if __name__ == "__main__":
+    main()

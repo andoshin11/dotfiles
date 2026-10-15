@@ -2,6 +2,8 @@ CANDIDATES := $(wildcard .??*)
 EXCLUSIONS := .DS_Store .git .github .gitignore .gitmodules .travis.yml .vimrc
 DOTFILES := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 INSTALLERS := $(sort $(wildcard ./scripts/*.sh))
+# Commands linked into ~/.local/bin by `make deploy`
+BINFILES := $(wildcard orca/*)
 
 # Make Homebrew installed by 05_brew.sh visible to the following installers on a fresh machine
 export PATH := /opt/homebrew/bin:/opt/homebrew/sbin:$(PATH)
@@ -15,6 +17,8 @@ deploy: ## Create symlink to home directory
 	@echo '==> Start to deploy dotfiles to home directory.'
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfvn $(abspath $(val)) $(HOME)/$(val);)
+	@mkdir -p $(HOME)/.local/bin
+	@$(foreach val, $(BINFILES), ln -sfv $(abspath $(val)) $(HOME)/.local/bin/$(notdir $(val));)
 
 update: ## Fetch changes for this repo
 	git pull origin master
